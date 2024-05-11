@@ -3,6 +3,7 @@ import Learner from "../models/learner.js"
 import Course from "../models/course.js"
 import CourseTopic from "../models/courseTopic.js"
 import Video from "../models/video.js"
+import CourseType from "../models/courseType.js"
 
 export const getUserDetails = async (req, res)=>{
     try {
@@ -30,6 +31,14 @@ export const getCourseTopicDetails = async (req, res)=>{
         res.status(404).json({message : error.message})
     }
 }
+export const getCourseTypeDetails = async (req, res)=>{
+    try {
+        const courseType = await CourseType.find()
+        res.status(200).json(courseType)
+    } catch (error) {
+        res.status(404).json({message : error.message})
+    }
+}
 export const getVideoDetails = async (req, res)=>{
     try {
         const video = await Video.find()
@@ -40,9 +49,10 @@ export const getVideoDetails = async (req, res)=>{
 }
 
 
+
 export const createLearner = async (req, res)=> {
     const learner = req.body
-    const newLearner = new PostMessage(learner)
+    const newLearner = new Learner(learner)
     try {
         await newLearner.save()
         res.status(201).json(newLearner)
@@ -53,7 +63,7 @@ export const createLearner = async (req, res)=> {
 
 export const createCourse = async (req, res)=> {
     const course = req.body
-    const newCourse = new PostMessage(course)
+    const newCourse = new Course(course)
     try {
         await newCourse.save()
         res.status(201).json(newCourse)
@@ -64,7 +74,7 @@ export const createCourse = async (req, res)=> {
 
 export const createCourseTopic = async (req, res)=> {
     const courseTopic = req.body
-    const newCourseTopic = new PostMessage(courseTopic)
+    const newCourseTopic = new CourseTopic(courseTopic)
     try {
         await newCourseTopic.save()
         res.status(201).json(newCourseTopic)
@@ -73,9 +83,20 @@ export const createCourseTopic = async (req, res)=> {
     }
 }
 
+export const createCourseType = async (req, res)=> {
+    const courseType = req.body
+    const newCourseType = new CourseType(courseType)
+    try {
+        await newCourseType.save()
+        res.status(201).json(newCourseType)
+    } catch (error) {
+        res.status(409).json({message:error.message})
+    }
+}
+
 export const createVideo = async (req, res)=> {
     const video = req.body
-    const newVideo = new PostMessage(video)
+    const newVideo = new Video(video)
     try {
         await newVideo.save()
         res.status(201).json(newVideo)
