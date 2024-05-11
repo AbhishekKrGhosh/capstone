@@ -9,8 +9,12 @@ const courseSchema = mongoose.Schema({
         default: new Date()
     },
     courseName: String,
-    likeCount: Number,
+    likeCount: {
+        type: Number,
+        default: 0
+    },
     tag: [String],
+    courseTopicId: String,
     title: String,
     description: String,
     videoTitle: String,
